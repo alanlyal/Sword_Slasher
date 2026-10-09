@@ -2,25 +2,25 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class LvtextPopUp : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private GameObject popupText;
+    [SerializeField] private GameObject popUpText;
     private void Start()
     {
-        popupText.SetActive(false);
+        popUpText.SetActive(false);
     }
     private void OnDisable()
     {
-        if(popupText != null)
+        if(popUpText != null)
         {
-            popupText.SetActive(false);
+            popUpText.SetActive(false);
         }
     }
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData mouseHover)
     {
-        popupText.SetActive(true);
+        popUpText.SetActive(true);
     }
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnPointerExit(PointerEventData mouseHover)
     {
-        popupText.SetActive(false);
+        popUpText.SetActive(false);
     }
 }
 
