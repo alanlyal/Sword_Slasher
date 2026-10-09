@@ -3,9 +3,27 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    [Header("Panels")]
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private GameObject creditsPanel;
+    [Header("LevelText")]
+    [SerializeField] private TMPro.TMP_Text levelText;
+    public void Start()
+    {
+        LevelTextRefresh();
+    }
+
+    public void LevelTextRefresh()
+    {
+        levelText.text = "Level: " + SaveSystem.GetLevel().ToString();
+    }
+    public void ContinueGame()
+    {
+        //todo: Call elijah save and load system to load the game
+        SceneManager.LoadScene("TrainingGrounds");// temporary until save and load system is implemented
+    }
+
     public void PlayGame()
     {
         SceneManager.LoadScene("TrainingGrounds");

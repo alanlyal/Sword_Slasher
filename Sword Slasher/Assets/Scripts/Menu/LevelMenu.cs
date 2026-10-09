@@ -5,11 +5,13 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private GameObject gamePanel;
     [SerializeField] private GameObject upgradePanel;
     [SerializeField] private GameObject optionPanel;
+    [SerializeField] private GameObject achivementPanel;
     public void OpenUpgradePanel()
     {
         gamePanel.SetActive(false);
         upgradePanel.SetActive(true);
         optionPanel.SetActive(false);
+        achivementPanel.SetActive(false);
         Time.timeScale = 0f;
     }
 
@@ -24,6 +26,7 @@ public class LevelMenu : MonoBehaviour
         gamePanel.SetActive(false);
         optionPanel.SetActive(true);
         upgradePanel.SetActive(false);
+        achivementPanel.SetActive(false);
         Time.timeScale = 0f;
     }
     public void CloseOptionPanel()
@@ -37,6 +40,7 @@ public class LevelMenu : MonoBehaviour
         gamePanel.SetActive(true);
         upgradePanel.SetActive(false);
         optionPanel.SetActive(false);
+        achivementPanel.SetActive(false);
         Time.timeScale = 1f;
     }
     public void QuitGame()
@@ -49,6 +53,20 @@ public class LevelMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+    }
+    public void OpenAchivementPanel()
+    {
+        gamePanel.SetActive(false);
+        achivementPanel.SetActive(true);
+        upgradePanel.SetActive(false);
+        optionPanel.SetActive(false);
+        Time.timeScale = 0f;
+    }
+    public void CloseAchivementPanel()
+    {
+        achivementPanel.SetActive(false);
+        gamePanel.SetActive(true);
+        Time.timeScale = 1f;
     }
     public void SaveGame()
     { 
