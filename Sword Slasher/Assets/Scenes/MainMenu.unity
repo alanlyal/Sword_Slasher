@@ -1749,7 +1749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c49a957a964282747800d0a28a19d445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LvtextPopUp
-  popupText: {fileID: 252879504}
+  popUpText: {fileID: 252879504}
 --- !u!1 &1264533219
 GameObject:
   m_ObjectHideFlags: 0
