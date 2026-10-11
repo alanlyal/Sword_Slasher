@@ -9,14 +9,17 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private GameObject gamePanel;
     [SerializeField] private GameObject upgradePanel;
     [SerializeField] private GameObject optionPanel;
-    [SerializeField] private GameObject achivementPanel;
+    [SerializeField] private GameObject achievementPanel;
 
     [Header("Stats")]
     [SerializeField] private int level = 1;
     [SerializeField] private int levelXp = 100;
     [SerializeField] private int xp;
-    [SerializeField] private int xpPerClick = 10;
+    [SerializeField] public int skillPoints = 0;
+    [SerializeField] public int xpPerClick = 10;
+    [SerializeField] public int passiveClick = 0;
     [SerializeField] private int totalClicks;
+
     //allows the level menu to be called by other classes to use the public variables
     [Header("XP bar")]
     [SerializeField] private Slider xpBar;
@@ -24,13 +27,16 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private TMP_Text lvTxt;
     private int previousLevelUpXp = 0;
 
+    private float timer = 0f;
+    private float interval = 1f;
+
     private static LevelMenu instance;
     public static LevelMenu Instance
     {
         get
         {
             if (instance != null) { return instance; }
-            instance = FindObjectOfType(typeof(LevelMenu)) as LevelMenu;
+            instance = FindAnyObjectByType(typeof(LevelMenu)) as LevelMenu;
             if (instance == null) { Debug.Log("LevelMenu not found"); }
             
             return instance;
@@ -50,12 +56,25 @@ public class LevelMenu : MonoBehaviour
         UpdateLvTxt();// reset the lv text on startup
     }
 
+    //For Upgrades that generate passive clicks
+    private void Update()
+    {
+        timer += Time.deltaTime;
+
+        if (timer >= interval)
+        {
+            totalClicks += passiveClick;
+            AddXp(xpPerClick);
+            timer -= interval;
+        }
+    }
+
     public void OpenUpgradePanel()
     {
         gamePanel.SetActive(false);
         upgradePanel.SetActive(true);
         optionPanel.SetActive(false);
-        achivementPanel.SetActive(false);
+        achievementPanel.SetActive(false);
         Time.timeScale = 0f;
     }
 
@@ -70,7 +89,7 @@ public class LevelMenu : MonoBehaviour
         gamePanel.SetActive(false);
         optionPanel.SetActive(true);
         upgradePanel.SetActive(false);
-        achivementPanel.SetActive(false);
+        achievementPanel.SetActive(false);
         Time.timeScale = 0f;
     }
     public void CloseOptionPanel()
@@ -84,7 +103,7 @@ public class LevelMenu : MonoBehaviour
         gamePanel.SetActive(true);
         upgradePanel.SetActive(false);
         optionPanel.SetActive(false);
-        achivementPanel.SetActive(false);
+        achievementPanel.SetActive(false);
         Time.timeScale = 1f;
     }
     public void QuitGame()
@@ -98,17 +117,17 @@ public class LevelMenu : MonoBehaviour
         Time.timeScale = 1f;
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
-    public void OpenAchivementPanel()
+    public void OpenAchievementPanel()
     {
         gamePanel.SetActive(false);
-        achivementPanel.SetActive(true);
+        achievementPanel.SetActive(true);
         upgradePanel.SetActive(false);
         optionPanel.SetActive(false);
         Time.timeScale = 0f;
     }
-    public void CloseAchivementPanel()
+    public void CloseAchievementPanel()
     {
-        achivementPanel.SetActive(false);
+        achievementPanel.SetActive(false);
         gamePanel.SetActive(true);
         Time.timeScale = 1f;
     }
@@ -135,12 +154,13 @@ public class LevelMenu : MonoBehaviour
 
     public void LevelUp()
     {
-        if (xp >= levelXp && level < 20)
+        if (xp >= levelXp && level < 101) // Will have to change depending on how many upgrades
         {
             level++;
+            skillPoints++;
             previousLevelUpXp = levelXp; //resets the bar once the player levels up so it doesn't reset to 0
             UpdateLvTxt();// to update the level text
-            if (level < 20)
+            if (level < 100)
             {
                 levelXp += levelXp + 100; //makes each level take double the xp of the previous one
                 Debug.Log($"You are level {level}, you need {levelXp} XP to get to the next level"); //turn into UI element later
@@ -149,7 +169,7 @@ public class LevelMenu : MonoBehaviour
             }
             else
             {
-                Debug.Log("Congrats, you have reached the max level of 20, you still earn xp but no more levels"); //turn into UI element later?
+                Debug.Log("Congrats, you have reached the max level of 100, you still earn xp but no more levels"); //turn into UI element later?
             }
         }
     }
