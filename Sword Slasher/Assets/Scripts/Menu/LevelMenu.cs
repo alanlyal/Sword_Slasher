@@ -15,10 +15,12 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private int level = 1;
     [SerializeField] private int levelXp = 100;
     [SerializeField] private int xp;
+    [SerializeField] private int passiveXP;
     [SerializeField] public int skillPoints = 0;
     [SerializeField] public int xpPerClick = 10;
     [SerializeField] public int passiveClick = 0;
     [SerializeField] private int totalClicks;
+    [SerializeField] private int totalPassiveClicks;
 
     //allows the level menu to be called by other classes to use the public variables
     [Header("XP bar")]
@@ -63,8 +65,10 @@ public class LevelMenu : MonoBehaviour
 
         if (timer >= interval)
         {
-            totalClicks += passiveClick;
-            AddXp(xpPerClick);
+            totalPassiveClicks += passiveClick;
+            passiveXP = totalPassiveClicks * 10;
+            AddXp(passiveXP);
+            totalPassiveClicks = 0;
             timer -= interval;
         }
     }
@@ -160,6 +164,7 @@ public class LevelMenu : MonoBehaviour
             skillPoints++;
             previousLevelUpXp = levelXp; //resets the bar once the player levels up so it doesn't reset to 0
             UpdateLvTxt();// to update the level text
+            Debug.Log($"Skill Points: {skillPoints}"); //Quick Skillpoint Log
             if (level < 100)
             {
                 levelXp += levelXp + 100; //makes each level take double the xp of the previous one
