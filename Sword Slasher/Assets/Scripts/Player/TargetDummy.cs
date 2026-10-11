@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TargetDummy : MonoBehaviour
@@ -30,6 +29,10 @@ public class TargetDummy : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (Time.timeScale == 0f) // had to add this if as when clicking pause and if you press the back button it give xp
+        {
+            return;
+        }
         if (canClick)
         {
             LevelMenu.Instance.AddClick(clicksPerClick);

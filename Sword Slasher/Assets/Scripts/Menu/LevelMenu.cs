@@ -1,5 +1,7 @@
-using System;
+using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
+using Unity.Properties;
 
 public class LevelMenu : MonoBehaviour
 {
@@ -15,8 +17,13 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private int xp;
     [SerializeField] private int xpPerClick = 10;
     [SerializeField] private int totalClicks;
-
     //allows the level menu to be called by other classes to use the public variables
+    [Header("XP bar")]
+    [SerializeField] private Slider xpBar;
+    [Header("Level Text")]
+    [SerializeField] private TMP_Text lvTxt;
+    private int previousLevelUpXp = 0;
+
     private static LevelMenu instance;
     public static LevelMenu Instance
     {
@@ -38,6 +45,9 @@ public class LevelMenu : MonoBehaviour
         xp = 0;
         xpPerClick = 10;
         totalClicks = 0;
+        previousLevelUpXp = 0; // resets the xpBar to 0 when the game starts
+        ResetXpBar(); // resets the xpBar to mirror the current xp and level
+        UpdateLvTxt();// reset the lv text on startup
     }
 
     public void OpenUpgradePanel()
@@ -118,7 +128,9 @@ public class LevelMenu : MonoBehaviour
     {
         xp += i;
         LevelUp();
+        ResetXpBar();//resets the xp bar to mirror the current xp and level
         Debug.Log($"You have {xp} XP"); //turn into UI element later
+        ResetXpBar();
     }
 
     public void LevelUp()
@@ -126,15 +138,43 @@ public class LevelMenu : MonoBehaviour
         if (xp >= levelXp && level < 20)
         {
             level++;
+            previousLevelUpXp = levelXp; //resets the bar once the player levels up so it doesn't reset to 0
+            UpdateLvTxt();// to update the level text
             if (level < 20)
             {
                 levelXp += levelXp + 100; //makes each level take double the xp of the previous one
                 Debug.Log($"You are level {level}, you need {levelXp} XP to get to the next level"); //turn into UI element later
+                ResetXpBar();
+
             }
             else
             {
                 Debug.Log("Congrats, you have reached the max level of 20, you still earn xp but no more levels"); //turn into UI element later?
             }
         }
+    }
+    public void ResetXpBar() // function to reset the xp bar to the correct value based on the current xp and levelXp
+    {
+        if (xpBar == null) return;
+
+        if (level >= 20) // once the player hits the max level. the bar just gets maxes out
+        {
+            xpBar.minValue = 0;
+            xpBar.maxValue = 1;
+            xpBar.value = 1;
+            return;
+        }
+        xpBar.maxValue = levelXp;
+        xpBar.minValue = previousLevelUpXp;
+        xpBar.value = xp;
+
+    }
+    private void UpdateLvTxt() // function to update the levelUpText
+    {
+        if (lvTxt == null)
+        {
+            return;
+        }
+        lvTxt.text = "Level: " + level;
     }
 }
