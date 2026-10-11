@@ -1862,6 +1862,7 @@ MonoBehaviour:
   xpPerClick: 10
   totalClicks: 0
   xpBar: {fileID: 948101852}
+  lvTxt: {fileID: 1710077499}
 --- !u!4 &541325873
 Transform:
   m_ObjectHideFlags: 0
