@@ -16,11 +16,12 @@ public class UpgradeButton : MonoBehaviour
 
     private void Start()
     {
+        amountOwned = 0;
         currentPrice = data.basePrice;
         UpdateUI();
     }
 
-    private void OnPurchase()
+    public void OnPurchase()
     {
         if (LevelMenu.Instance.skillPoints >= currentPrice)
         {
@@ -33,7 +34,7 @@ public class UpgradeButton : MonoBehaviour
             LevelMenu.Instance.passiveClick += data.passiveClickIncrease;
 
             //Increase Price
-            currentPrice = data.basePrice += data.priceIncrease;
+            currentPrice += data.priceIncrease;
             UpdateUI();
         }
     }
@@ -43,7 +44,7 @@ public class UpgradeButton : MonoBehaviour
     {
         nameText.text = data.upgradeName;
         priceText.text = "Price: " + currentPrice;
-        ownedText.text = "Owned: " + amountOwned;
+        ownedText.text = "x" + amountOwned;
     }
 }
 
