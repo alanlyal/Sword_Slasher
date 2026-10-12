@@ -9,18 +9,19 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private GameObject gamePanel;
     [SerializeField] private GameObject upgradePanel;
     [SerializeField] private GameObject optionPanel;
-    [SerializeField] private GameObject achievementPanel;
+    [SerializeField] private GameObject statPanel;
 
     [Header("Stats")]
-    [SerializeField] private int level = 1;
-    [SerializeField] private int levelXp = 100;
-    [SerializeField] private int xp;
-    [SerializeField] private int passiveXP;
+    [SerializeField] public int level = 1;
+    [SerializeField] public int levelXp = 100;
+    [SerializeField] public int xp;
+    [SerializeField] public int passiveXP;
     [SerializeField] public int skillPoints = 0;
     [SerializeField] public int xpPerClick = 10;
     [SerializeField] public int passiveClick = 0;
-    [SerializeField] private int totalClicks;
-    [SerializeField] private int totalPassiveClicks;
+    [SerializeField] public int totalClicks;
+    [SerializeField] public int totalPassiveClicks;
+    [SerializeField] public int upgradesOwned;
 
     //allows the level menu to be called by other classes to use the public variables
     [Header("XP bar")]
@@ -40,7 +41,7 @@ public class LevelMenu : MonoBehaviour
             if (instance != null) { return instance; }
             instance = FindAnyObjectByType(typeof(LevelMenu)) as LevelMenu;
             if (instance == null) { Debug.Log("LevelMenu not found"); }
-            
+
             return instance;
         }
     }
@@ -78,7 +79,7 @@ public class LevelMenu : MonoBehaviour
         gamePanel.SetActive(false);
         upgradePanel.SetActive(true);
         optionPanel.SetActive(false);
-        achievementPanel.SetActive(false);
+        statPanel.SetActive(false);
         Time.timeScale = 0f;
     }
 
@@ -93,7 +94,7 @@ public class LevelMenu : MonoBehaviour
         gamePanel.SetActive(false);
         optionPanel.SetActive(true);
         upgradePanel.SetActive(false);
-        achievementPanel.SetActive(false);
+        statPanel.SetActive(false);
         Time.timeScale = 0f;
     }
     public void CloseOptionPanel()
@@ -107,7 +108,7 @@ public class LevelMenu : MonoBehaviour
         gamePanel.SetActive(true);
         upgradePanel.SetActive(false);
         optionPanel.SetActive(false);
-        achievementPanel.SetActive(false);
+        statPanel.SetActive(false);
         Time.timeScale = 1f;
     }
     public void QuitGame()
@@ -121,28 +122,29 @@ public class LevelMenu : MonoBehaviour
         Time.timeScale = 1f;
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
-    public void OpenAchievementPanel()
+    public void OpenStatPanel()
     {
         gamePanel.SetActive(false);
-        achievementPanel.SetActive(true);
+        statPanel.SetActive(true);
         upgradePanel.SetActive(false);
         optionPanel.SetActive(false);
         Time.timeScale = 0f;
     }
-    public void CloseAchievementPanel()
+    public void CloseStatPanel()
     {
-        achievementPanel.SetActive(false);
+        statPanel.SetActive(false);
         gamePanel.SetActive(true);
         Time.timeScale = 1f;
     }
     public void SaveGame()
-    { 
+    {
         //TODO
     }
 
     public void AddClick(int i)
     {
-        totalClicks+= i;
+        totalClicks += i;
+        GameEvents.Click(totalClicks);
         AddXp(xpPerClick);
         Debug.Log($"You have clicked {totalClicks} times"); //turn this into a UI element later
     }
@@ -162,6 +164,7 @@ public class LevelMenu : MonoBehaviour
         {
             level++;
             skillPoints++;
+            GameEvents.LevelUp(level);
             previousLevelUpXp = levelXp; //resets the bar once the player levels up so it doesn't reset to 0
             UpdateLvTxt();// to update the level text
             Debug.Log($"Skill Points: {skillPoints}"); //Quick Skillpoint Log

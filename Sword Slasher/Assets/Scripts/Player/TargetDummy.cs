@@ -4,18 +4,18 @@ using UnityEngine;
 public class TargetDummy : MonoBehaviour
 {
     private SpriteRenderer sr;
-    
+
     private bool canClick = true;
 
     [Header("Stats")]
     [SerializeField] private int clicksPerClick = 1; //in case we add dual wielding or something
     [SerializeField] private float clickCooldown = 0.15f;
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        
+
         //ensuring the values are what they should be at start
         clicksPerClick = 1;
         clickCooldown = 0.15f;
@@ -24,7 +24,7 @@ public class TargetDummy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnMouseDown()

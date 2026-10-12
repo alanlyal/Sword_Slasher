@@ -27,7 +27,9 @@ public class UpgradeButton : MonoBehaviour
         {
             //Purchase Upgrade with Skill Points
             LevelMenu.Instance.skillPoints -= currentPrice;
+            LevelMenu.Instance.upgradesOwned++;
             amountOwned++;
+            GameEvents.UpgradePurchased(amountOwned);
 
             //Apply Upgrade
             LevelMenu.Instance.xpPerClick += data.clickIncrease;
