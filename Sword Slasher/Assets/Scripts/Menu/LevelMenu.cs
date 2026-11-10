@@ -1,7 +1,8 @@
-using UnityEngine.UI;
-using UnityEngine;
 using TMPro;
 using Unity.Properties;
+using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class LevelMenu : MonoBehaviour
 {
@@ -11,6 +12,14 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private GameObject optionPanel;
     [SerializeField] private GameObject statPanel;
     [SerializeField] private GameObject customizationPanel;
+
+    [Header("Audio")]
+    [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Slider bgmSlider;
+    public AudioMixer audioMixer;
+
+    float sfxValue;
+    float bgmValue;
 
     [Header("Stats")]
     [SerializeField] public int level = 1;
@@ -58,6 +67,12 @@ public class LevelMenu : MonoBehaviour
         previousLevelUpXp = 0; // resets the xpBar to 0 when the game starts
         ResetXpBar(); // resets the xpBar to mirror the current xp and level
         UpdateLvTxt();// reset the lv text on startup
+
+        audioMixer.GetFloat("SFXvolume", out sfxValue);
+        audioMixer.GetFloat("BGMvolume", out bgmValue);
+        sfxSlider.value = sfxValue;
+        bgmSlider.value = bgmValue;
+        MusicManager.Play("GameplayMusic");
     }
 
     //For Upgrades that generate passive clicks
@@ -237,5 +252,29 @@ public class LevelMenu : MonoBehaviour
             return;
         }
         lvTxt.text = "Level: " + level;
+    }
+
+    public void SfxVolume(float volume)
+    {
+        if (volume == -25)
+        {
+            audioMixer.SetFloat("SFXvolume", -80);
+        }
+        else
+        {
+            audioMixer.SetFloat("SFXvolume", volume);
+        }
+    }
+
+    public void BgmVolume(float volume)
+    {
+        if (volume == -35)
+        {
+            audioMixer.SetFloat("BGMvolume", -80);
+        }
+        else
+        {
+            audioMixer.SetFloat("BGMvolume", volume);
+        }
     }
 }

@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -9,10 +11,25 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject creditsPanel;
     [Header("LevelText")]
     [SerializeField] private TMPro.TMP_Text levelText;
+
+    // Audio
+    [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Slider bgmSlider;
+    public AudioMixer audioMixer;
+
+    float sfxValue;
+    float bgmValue;
+
     public void Start()
     {
         SaveSystem.LoadPlayerData();
         LevelTextRefresh();
+
+        audioMixer.GetFloat("SFXvolume", out sfxValue);
+        sfxSlider.value = sfxValue;
+        audioMixer.GetFloat("BGMvolume", out bgmValue);
+        bgmSlider.value = bgmValue;
+        MusicManager.Play("MenuMusic");
     }
 
     public void LevelTextRefresh()
@@ -59,5 +76,29 @@ public class MainMenu : MonoBehaviour
     {
         creditsPanel.SetActive(false);
         mainMenuPanel.SetActive(true);
+    }
+
+    public void SfxVolume(float volume)
+    {
+        if (volume == -25)
+        {
+            audioMixer.SetFloat("SFXvolume", -80);
+        }
+        else
+        {
+            audioMixer.SetFloat("SFXvolume", volume);
+        }
+    }
+
+    public void BgmVolume(float volume)
+    {
+        if (volume == -35)
+        {
+            audioMixer.SetFloat("BGMvolume", -80);
+        }
+        else
+        {
+            audioMixer.SetFloat("BGMvolume", volume);
+        }
     }
 }
