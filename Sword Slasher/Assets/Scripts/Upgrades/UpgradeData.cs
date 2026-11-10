@@ -5,6 +5,7 @@ using UnityEngine;
 public class UpgradeData : ScriptableObject
 {
     public string upgradeName;
+    public string description;
     public int basePrice = 1;
     public int priceIncrease = 1;
 
