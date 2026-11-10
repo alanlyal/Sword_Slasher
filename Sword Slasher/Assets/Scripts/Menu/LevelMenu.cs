@@ -10,6 +10,7 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private GameObject upgradePanel;
     [SerializeField] private GameObject optionPanel;
     [SerializeField] private GameObject statPanel;
+    [SerializeField] private GameObject customizationPanel;
 
     [Header("Stats")]
     [SerializeField] public int level = 1;
@@ -80,6 +81,7 @@ public class LevelMenu : MonoBehaviour
         upgradePanel.SetActive(true);
         optionPanel.SetActive(false);
         statPanel.SetActive(false);
+        customizationPanel.SetActive(false);
         Time.timeScale = 0f;
     }
 
@@ -95,6 +97,7 @@ public class LevelMenu : MonoBehaviour
         optionPanel.SetActive(true);
         upgradePanel.SetActive(false);
         statPanel.SetActive(false);
+        customizationPanel.SetActive(false);
         Time.timeScale = 0f;
     }
     public void CloseOptionPanel()
@@ -109,6 +112,7 @@ public class LevelMenu : MonoBehaviour
         upgradePanel.SetActive(false);
         optionPanel.SetActive(false);
         statPanel.SetActive(false);
+        customizationPanel.SetActive(false);
         Time.timeScale = 1f;
     }
     public void QuitGame()
@@ -128,6 +132,7 @@ public class LevelMenu : MonoBehaviour
         statPanel.SetActive(true);
         upgradePanel.SetActive(false);
         optionPanel.SetActive(false);
+        customizationPanel.SetActive(false);
         Time.timeScale = 0f;
     }
     public void CloseStatPanel()
@@ -136,6 +141,26 @@ public class LevelMenu : MonoBehaviour
         gamePanel.SetActive(true);
         Time.timeScale = 1f;
     }
+
+    //Customization panel
+    public void OpenCustomizationPanel()
+    {
+        gamePanel.SetActive(false);
+        customizationPanel.SetActive(true);
+        optionPanel.SetActive(false);
+        statPanel.SetActive(false);
+        Time.timeScale = 0f;
+    }
+
+    public void CloseCustomizationPanel()
+    {
+        customizationPanel.SetActive(false);
+        gamePanel.SetActive(true);
+        Time.timeScale = 1f;
+    }
+
+
+
     public void SaveGame()
     {
         //TODO
