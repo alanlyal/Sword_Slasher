@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text levelText;
     public void Start()
     {
+        SaveSystem.LoadPlayerData();
         LevelTextRefresh();
     }
 
@@ -20,12 +21,18 @@ public class MainMenu : MonoBehaviour
     }
     public void ContinueGame()
     {
-        //todo: Call elijah save and load system to load the game
-        SceneManager.LoadScene("TrainingGrounds");// temporary until save and load system is implemented
+        if (!SaveSystem.hasPlayerDataSaved())
+        {
+            Debug.Log("no save file found :(");
+            return;
+        }
+        SaveSystem.isContinuing = true;
+        SceneManager.LoadScene("TrainingGrounds");
     }
 
     public void PlayGame()
     {
+        SaveSystem.isContinuing = false;
         SceneManager.LoadScene("TrainingGrounds");
     }
     public void QuitGame()

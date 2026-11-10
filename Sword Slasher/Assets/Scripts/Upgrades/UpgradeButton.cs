@@ -5,9 +5,11 @@ using TMPro;
 public class UpgradeButton : MonoBehaviour
 {
     public UpgradeData data; //Add Any Upgrade
-
     private int amountOwned = 0; // Track how many times upgrade purchased (if purchasable multiple times)
     private int currentPrice;
+    // for saving upgrades
+    public string upgradeId => data.name;
+    public int upgradesOwned => amountOwned;
 
     //For Display
     public TMP_Text nameText;
@@ -17,8 +19,7 @@ public class UpgradeButton : MonoBehaviour
 
     private void Start()
     {
-        amountOwned = 0;
-        currentPrice = data.basePrice;
+        currentPrice = data.basePrice + data.priceIncrease * amountOwned;
         UpdateUI();
     }
 
@@ -30,7 +31,7 @@ public class UpgradeButton : MonoBehaviour
             LevelMenu.Instance.skillPoints -= currentPrice;
             LevelMenu.Instance.upgradesOwned++;
             amountOwned++;
-            GameEvents.UpgradePurchased(amountOwned);
+            GameEvents.UpgradePurchased(LevelMenu.Instance.upgradesOwned);
 
             //Apply Upgrade
             LevelMenu.Instance.xpPerClick += data.clickIncrease;
@@ -49,6 +50,14 @@ public class UpgradeButton : MonoBehaviour
         priceText.text = "Price: " + currentPrice;
         ownedText.text = "x" + amountOwned;
         descriptionText.text = data.description;
+    }
+
+    //Restore Upgrades from Save Data
+    public void RestoreUpgrades(int owned )
+    {
+        amountOwned = owned;
+        currentPrice = data.basePrice + data.priceIncrease * owned;
+        UpdateUI();
     }
 }
 

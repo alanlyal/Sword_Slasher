@@ -6,9 +6,28 @@ public class Customization : MonoBehaviour
     [SerializeField] private GameObject option1;
     [SerializeField] private GameObject option2;
 
+    //for saving 
+    private int selectedOption;
+    public int OptionSelected => selectedOption;
+
     private void Start()
     {
-        EnableNone();
+        if (SaveSystem.isContinuing)
+        {
+            int savedOption = SaveSystem.playerData.custimization;
+            if (savedOption == 1)
+            {
+                EnableOption1();
+            }
+            else if (savedOption == 2)
+            {
+                EnableOption2();
+            }
+            else
+            {
+                EnableNone();
+            }
+        }
     }
 
     public void EnableNone()
