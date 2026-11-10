@@ -83,6 +83,7 @@ public class LevelMenu : MonoBehaviour
         statPanel.SetActive(false);
         customizationPanel.SetActive(false);
         Time.timeScale = 0f;
+        Cursor.visible = true;
     }
 
     public void CloseUpgradePanel()
@@ -90,6 +91,7 @@ public class LevelMenu : MonoBehaviour
         upgradePanel.SetActive(false);
         gamePanel.SetActive(true);
         Time.timeScale = 1f;
+        Cursor.visible = false;
     }
     public void OpenOptionPanel()
     {
@@ -99,12 +101,14 @@ public class LevelMenu : MonoBehaviour
         statPanel.SetActive(false);
         customizationPanel.SetActive(false);
         Time.timeScale = 0f;
+        Cursor.visible = true;
     }
     public void CloseOptionPanel()
     {
         optionPanel.SetActive(false);
         gamePanel.SetActive(true);
         Time.timeScale = 1f;
+        Cursor.visible = false;
     }
     public void ResumeGame()
     {
@@ -134,12 +138,14 @@ public class LevelMenu : MonoBehaviour
         optionPanel.SetActive(false);
         customizationPanel.SetActive(false);
         Time.timeScale = 0f;
+        Cursor.visible = true;
     }
     public void CloseStatPanel()
     {
         statPanel.SetActive(false);
         gamePanel.SetActive(true);
         Time.timeScale = 1f;
+        Cursor.visible = false;
     }
 
     //Customization panel
@@ -150,6 +156,7 @@ public class LevelMenu : MonoBehaviour
         optionPanel.SetActive(false);
         statPanel.SetActive(false);
         Time.timeScale = 0f;
+        Cursor.visible = true;
     }
 
     public void CloseCustomizationPanel()
@@ -157,6 +164,7 @@ public class LevelMenu : MonoBehaviour
         customizationPanel.SetActive(false);
         gamePanel.SetActive(true);
         Time.timeScale = 1f;
+        Cursor.visible = false;
     }
 
 

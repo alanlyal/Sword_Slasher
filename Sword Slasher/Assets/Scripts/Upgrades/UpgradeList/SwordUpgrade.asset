@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SwordUpgrade
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   upgradeName: Sharp Edge
+  description: Increases xp per click by 5
   basePrice: 1
   priceIncrease: 1
   clickIncrease: 5
