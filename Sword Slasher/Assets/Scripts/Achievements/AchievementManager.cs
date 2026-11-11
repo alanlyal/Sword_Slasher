@@ -57,4 +57,12 @@ public class AchievementManager : MonoBehaviour
         if (toast != null) toast.Show(achievement);
         Debug.Log($"Achievement Unlocked: {achievement.achievementName}");
     }
+    public List<string> GetUnlocked()
+    {
+        return new List<string>(unlocked);
+    }
+    public void RestoreUnlocked(List<string> achievmentNames)
+    {
+        unlocked = new HashSet<string>(achievmentNames);
+    }
 }

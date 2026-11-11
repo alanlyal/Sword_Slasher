@@ -1,11 +1,11 @@
 using System.IO;
 using UnityEngine;
-public class SaveSystem : MonoBehaviour
+public static class SaveSystem 
 {
     public static PlayerData playerData = new PlayerData();
     public static bool isContinuing;
     private static string saveFile => Path.Combine(Application.persistentDataPath, "playerdata.json");
-    public static void saveDate()
+    public static void saveData()
     {
         File.WriteAllText(saveFile, JsonUtility.ToJson(playerData, true));
     }
