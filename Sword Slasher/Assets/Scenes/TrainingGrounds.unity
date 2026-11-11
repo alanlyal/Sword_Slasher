@@ -10874,6 +10874,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwordCursor
   tutorialPanel: {fileID: 1217767290}
+  optionsPanel: {fileID: 386448150}
+  statsPanel: {fileID: 64071722}
+  upgradePanel: {fileID: 276239433}
+  customizationPanel: {fileID: 411572141}
   size: 0.25
 --- !u!212 &1669409151
 SpriteRenderer:
