@@ -7,6 +7,9 @@ public class TargetDummy : MonoBehaviour
 
     private bool canClick = true;
 
+    [Header("Animation")]
+    [SerializeField] private Animator swordAnimator;
+
     [Header("Stats")]
     [SerializeField] private int clicksPerClick = 1; //in case we add dual wielding or something
     [SerializeField] private float clickCooldown = 0.15f;
@@ -38,6 +41,9 @@ public class TargetDummy : MonoBehaviour
             LevelMenu.Instance.AddClick(clicksPerClick);
             StartCoroutine(ClickCooldown(clickCooldown));
             SFXManager.Play("SwordSwing");
+
+            //animation
+            swordAnimator.SetTrigger("Attack");
         }
         else
         {
