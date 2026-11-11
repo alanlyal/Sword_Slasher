@@ -61,6 +61,7 @@ public class LevelMenu : MonoBehaviour
     {
         if (SaveSystem.isContinuing)
         {
+            tutorialPanel.SetActive(false);
             LoadGame(SaveSystem.playerData);
         }
         else
@@ -74,6 +75,9 @@ public class LevelMenu : MonoBehaviour
             previousLevelUpXp = 0; // resets the xpBar to 0 when the game starts
             ResetXpBar(); // resets the xpBar to mirror the current xp and level
             UpdateLvTxt();// reset the lv text on startup
+            tutorialPanel.SetActive(true);
+            Cursor.visible = true;
+            Time.timeScale = 0f;
         }
         ResetXpBar();
         UpdateLvTxt();
@@ -82,8 +86,6 @@ public class LevelMenu : MonoBehaviour
         sfxSlider.value = sfxValue;
         bgmSlider.value = bgmValue;
         MusicManager.Play("GameplayMusic");
-        Cursor.visible = true;
-        Time.timeScale = 0f;
     }
 
     //For Upgrades that generate passive clicks

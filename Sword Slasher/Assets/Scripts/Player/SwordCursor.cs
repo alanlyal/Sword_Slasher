@@ -5,6 +5,10 @@ public class SwordCursor : MonoBehaviour
 {
     //public Texture2D swordSprite;
     [SerializeField] private GameObject tutorialPanel;
+    [SerializeField] private GameObject optionsPanel;
+    [SerializeField] private GameObject statsPanel;
+    [SerializeField] private GameObject upgradePanel;
+    [SerializeField] private GameObject customizationPanel;
     public float size = 2f;
 
     void Start()
@@ -16,8 +20,8 @@ public class SwordCursor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Check if the tutorial panel is open to display the cursor
-        if (tutorialPanel.activeSelf)
+        //Check if a panel is open to display the cursor
+        if (tutorialPanel.activeSelf || optionsPanel.activeSelf || statsPanel.activeSelf || upgradePanel.activeSelf || customizationPanel.activeSelf)
         {
             Cursor.visible = true;
             return;
