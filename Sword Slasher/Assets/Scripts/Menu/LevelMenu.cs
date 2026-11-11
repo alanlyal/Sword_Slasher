@@ -76,16 +76,6 @@ public class LevelMenu : MonoBehaviour
         }
         ResetXpBar();
         UpdateLvTxt();
-        //ensuring the values are what they should be at start
-        level = 1;
-        levelXp = 100;
-        xp = 0;
-        xpPerClick = 10;
-        totalClicks = 0;
-        previousLevelUpXp = 0; // resets the xpBar to 0 when the game starts
-        ResetXpBar(); // resets the xpBar to mirror the current xp and level
-        UpdateLvTxt();// reset the lv text on startup
-
         audioMixer.GetFloat("SFXvolume", out sfxValue);
         audioMixer.GetFloat("BGMvolume", out bgmValue);
         sfxSlider.value = sfxValue;
