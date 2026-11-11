@@ -1,6 +1,8 @@
-using UnityEngine.UI;
-using UnityEngine;
 using TMPro;
+using Unity.Properties;
+using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class LevelMenu : MonoBehaviour
 {
@@ -10,6 +12,14 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private GameObject optionPanel;
     [SerializeField] private GameObject statPanel;
     [SerializeField] private GameObject customizationPanel;
+
+    [Header("Audio")]
+    [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Slider bgmSlider;
+    public AudioMixer audioMixer;
+
+    float sfxValue;
+    float bgmValue;
 
     [Header("Stats")]
     [SerializeField] public int level = 1;
@@ -66,6 +76,21 @@ public class LevelMenu : MonoBehaviour
         }
         ResetXpBar();
         UpdateLvTxt();
+        //ensuring the values are what they should be at start
+        level = 1;
+        levelXp = 100;
+        xp = 0;
+        xpPerClick = 10;
+        totalClicks = 0;
+        previousLevelUpXp = 0; // resets the xpBar to 0 when the game starts
+        ResetXpBar(); // resets the xpBar to mirror the current xp and level
+        UpdateLvTxt();// reset the lv text on startup
+
+        audioMixer.GetFloat("SFXvolume", out sfxValue);
+        audioMixer.GetFloat("BGMvolume", out bgmValue);
+        sfxSlider.value = sfxValue;
+        bgmSlider.value = bgmValue;
+        MusicManager.Play("GameplayMusic");
     }
 
     //For Upgrades that generate passive clicks
@@ -94,6 +119,7 @@ public class LevelMenu : MonoBehaviour
         statPanel.SetActive(false);
         customizationPanel.SetActive(false);
         Time.timeScale = 0f;
+        Cursor.visible = true;
     }
 
     public void CloseUpgradePanel()
@@ -101,6 +127,7 @@ public class LevelMenu : MonoBehaviour
         upgradePanel.SetActive(false);
         gamePanel.SetActive(true);
         Time.timeScale = 1f;
+        Cursor.visible = false;
     }
     public void OpenOptionPanel()
     {
@@ -110,12 +137,14 @@ public class LevelMenu : MonoBehaviour
         statPanel.SetActive(false);
         customizationPanel.SetActive(false);
         Time.timeScale = 0f;
+        Cursor.visible = true;
     }
     public void CloseOptionPanel()
     {
         optionPanel.SetActive(false);
         gamePanel.SetActive(true);
         Time.timeScale = 1f;
+        Cursor.visible = false;
     }
     public void ResumeGame()
     {
@@ -145,12 +174,14 @@ public class LevelMenu : MonoBehaviour
         optionPanel.SetActive(false);
         customizationPanel.SetActive(false);
         Time.timeScale = 0f;
+        Cursor.visible = true;
     }
     public void CloseStatPanel()
     {
         statPanel.SetActive(false);
         gamePanel.SetActive(true);
         Time.timeScale = 1f;
+        Cursor.visible = false;
     }
 
     //Customization panel
@@ -161,6 +192,7 @@ public class LevelMenu : MonoBehaviour
         optionPanel.SetActive(false);
         statPanel.SetActive(false);
         Time.timeScale = 0f;
+        Cursor.visible = true;
     }
 
     public void CloseCustomizationPanel()
@@ -168,6 +200,7 @@ public class LevelMenu : MonoBehaviour
         customizationPanel.SetActive(false);
         gamePanel.SetActive(true);
         Time.timeScale = 1f;
+        Cursor.visible = false;
     }
 
 
@@ -299,4 +332,28 @@ public class LevelMenu : MonoBehaviour
         }
     }
     
+
+    public void SfxVolume(float volume)
+    {
+        if (volume == -25)
+        {
+            audioMixer.SetFloat("SFXvolume", -80);
+        }
+        else
+        {
+            audioMixer.SetFloat("SFXvolume", volume);
+        }
+    }
+
+    public void BgmVolume(float volume)
+    {
+        if (volume == -35)
+        {
+            audioMixer.SetFloat("BGMvolume", -80);
+        }
+        else
+        {
+            audioMixer.SetFloat("BGMvolume", volume);
+        }
+    }
 }

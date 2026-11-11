@@ -15,6 +15,7 @@ public class UpgradeButton : MonoBehaviour
     public TMP_Text nameText;
     public TMP_Text priceText;
     public TMP_Text ownedText;
+    public TMP_Text descriptionText;
 
     private void Start()
     {
@@ -48,6 +49,7 @@ public class UpgradeButton : MonoBehaviour
         nameText.text = data.upgradeName;
         priceText.text = "Price: " + currentPrice;
         ownedText.text = "x" + amountOwned;
+        descriptionText.text = data.description;
     }
 
     //Restore Upgrades from Save Data
