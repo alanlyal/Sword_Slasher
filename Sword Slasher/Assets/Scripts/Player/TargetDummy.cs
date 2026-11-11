@@ -37,6 +37,7 @@ public class TargetDummy : MonoBehaviour
         {
             LevelMenu.Instance.AddClick(clicksPerClick);
             StartCoroutine(ClickCooldown(clickCooldown));
+            SFXManager.Play("SwordSwing");
         }
         else
         {
