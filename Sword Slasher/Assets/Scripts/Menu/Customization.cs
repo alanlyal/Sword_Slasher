@@ -14,30 +14,24 @@ public class Customization : MonoBehaviour
     {
         if (SaveSystem.isContinuing)
         {
-            int savedOption = SaveSystem.playerData.custimization;
-            if (savedOption == 1)
-            {
-                EnableOption1();
-            }
-            else if (savedOption == 2)
-            {
-                EnableOption2();
-            }
-            else
-            {
-                EnableNone();
-            }
+            LoadSelectedOption();
+        }
+        else
+        {
+            EnableNone();
         }
     }
 
     public void EnableNone()
     {
+        selectedOption = 0;
         option1.SetActive(false);
         option2.SetActive(false);
     }
 
     public void EnableOption1()
     {
+        selectedOption = 1;
         option1.SetActive(true);
 
         option2.SetActive(false);
@@ -45,9 +39,25 @@ public class Customization : MonoBehaviour
 
     public void EnableOption2()
     {
+        selectedOption = 2;
         option1.SetActive(false);
 
         option2.SetActive(true);
     }
-
+    public void LoadSelectedOption()
+    { 
+        int savedOption = SaveSystem.playerData.custimization;
+        if (savedOption== 1)
+        {
+            EnableOption1();
+        }
+        else if (savedOption == 2)
+        {
+            EnableOption2();
+        }
+        else
+        {
+            EnableNone();
+        }
+    }
 }

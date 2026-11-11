@@ -12,6 +12,7 @@ public class PlayerData
     public int totalClicks;
     public int custimization;
     public int upgradesBought;
+    public int previousLevelUpXp;
     public List<string> achievements = new();
     public List<string> upgrades = new();
 }

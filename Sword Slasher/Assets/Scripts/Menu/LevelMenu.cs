@@ -58,6 +58,24 @@ public class LevelMenu : MonoBehaviour
 
     private void Start()
     {
+        if (SaveSystem.isContinuing)
+        {
+            LoadGame(SaveSystem.playerData);
+        }
+        else
+        {
+            //ensuring the values are what they should be at start
+            level = 1;
+            levelXp = 100;
+            xp = 0;
+            xpPerClick = 10;
+            totalClicks = 0;
+            previousLevelUpXp = 0; // resets the xpBar to 0 when the game starts
+            ResetXpBar(); // resets the xpBar to mirror the current xp and level
+            UpdateLvTxt();// reset the lv text on startup
+        }
+        ResetXpBar();
+        UpdateLvTxt();
         //ensuring the values are what they should be at start
         level = 1;
         levelXp = 100;
@@ -82,10 +100,13 @@ public class LevelMenu : MonoBehaviour
 
         if (timer >= interval)
         {
-            totalPassiveClicks += passiveClick;
-            passiveXP = totalPassiveClicks * 10;
-            AddXp(passiveXP);
-            totalPassiveClicks = 0;
+            if (passiveClick >0)
+            {
+                totalPassiveClicks += passiveClick;
+                passiveXP = totalPassiveClicks * 10;
+                AddXp(passiveXP);
+                totalPassiveClicks = 0;
+            }
             timer -= interval;
         }
     }
@@ -186,7 +207,32 @@ public class LevelMenu : MonoBehaviour
 
     public void SaveGame()
     {
-        //TODO
+        var data = SaveSystem.playerData;
+        data.level = level;
+        data.xp = xp;
+        data.levelXp = levelXp;
+        data.clickingXp = xpPerClick;
+        data.skillPoints = skillPoints;
+        data.previousLevelUpXp = previousLevelUpXp;
+        data.passiveClicks = passiveClick;
+        data.totalClicks = totalClicks;
+        data.upgradesBought = upgradesOwned;
+        data.upgrades.Clear();
+        foreach(var button in FindObjectsByType<UpgradeButton>(FindObjectsInactive.Include))
+        {
+            data.upgrades.Add(button.upgradeId + ":" + button.upgradesOwned);
+        }
+        if (AchievementManager.Instance != null)
+        {
+            data.achievements = AchievementManager.Instance.GetUnlocked();
+        }
+        var customization = FindAnyObjectByType<Customization>(FindObjectsInactive.Include);
+        if (customization != null)
+        {
+            data.custimization = customization.OptionSelected;
+        }
+        SaveSystem.saveData();
+        Debug.Log("Game saved");
     }
 
     public void AddClick(int i)
@@ -208,7 +254,7 @@ public class LevelMenu : MonoBehaviour
 
     public void LevelUp()
     {
-        if (xp >= levelXp && level < 101) // Will have to change depending on how many upgrades
+        if (xp >= levelXp && level <20 ) // Will have to change depending on how many upgrades
         {
             level++;
             skillPoints++;
@@ -216,7 +262,7 @@ public class LevelMenu : MonoBehaviour
             previousLevelUpXp = levelXp; //resets the bar once the player levels up so it doesn't reset to 0
             UpdateLvTxt();// to update the level text
             Debug.Log($"Skill Points: {skillPoints}"); //Quick Skillpoint Log
-            if (level < 100)
+            if (level < 20)
             {
                 levelXp += levelXp + 100; //makes each level take double the xp of the previous one
                 Debug.Log($"You are level {level}, you need {levelXp} XP to get to the next level"); //turn into UI element later
@@ -225,7 +271,7 @@ public class LevelMenu : MonoBehaviour
             }
             else
             {
-                Debug.Log("Congrats, you have reached the max level of 100, you still earn xp but no more levels"); //turn into UI element later?
+                Debug.Log("Congrats, you have reached the max level of 20, you still earn xp but no more levels"); //turn into UI element later?
             }
         }
     }
@@ -253,6 +299,39 @@ public class LevelMenu : MonoBehaviour
         }
         lvTxt.text = "Level: " + level;
     }
+    private void LoadGame(PlayerData data)
+    {
+        level = data.level;
+        xp = data.xp;
+        previousLevelUpXp = data.previousLevelUpXp;
+        xpPerClick = data.clickingXp;
+        skillPoints = data.skillPoints;
+        passiveClick = data.passiveClicks;
+        totalClicks = data.totalClicks;
+        levelXp = data.levelXp;
+        upgradesOwned = data.upgradesBought;
+        foreach (var button in FindObjectsByType<UpgradeButton>(FindObjectsInactive.Include))
+        {
+           foreach (string savedUpgrade in data.upgrades)
+            {
+                string[] nameAndAmount = savedUpgrade.Split(':');
+                if (nameAndAmount[0] == button.upgradeId)
+                {
+                    button.RestoreUpgrades(int.Parse(nameAndAmount[1]));
+                }
+            }
+        }
+        if (AchievementManager.Instance != null)
+        {
+            AchievementManager.Instance.RestoreUnlocked(data.achievements);
+        }
+        var customization = FindAnyObjectByType<Customization>(FindObjectsInactive.Include);
+        if(customization != null)
+        {
+            customization.LoadSelectedOption();
+        }
+    }
+    
 
     public void SfxVolume(float volume)
     {
