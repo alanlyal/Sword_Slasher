@@ -12,6 +12,7 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private GameObject optionPanel;
     [SerializeField] private GameObject statPanel;
     [SerializeField] private GameObject customizationPanel;
+    [SerializeField] private GameObject tutorialPanel;
 
     [Header("Audio")]
     [SerializeField] private Slider sfxSlider;
@@ -81,6 +82,8 @@ public class LevelMenu : MonoBehaviour
         sfxSlider.value = sfxValue;
         bgmSlider.value = bgmValue;
         MusicManager.Play("GameplayMusic");
+        Cursor.visible = true;
+        Time.timeScale = 0f;
     }
 
     //For Upgrades that generate passive clicks
@@ -189,6 +192,13 @@ public class LevelMenu : MonoBehaviour
     {
         customizationPanel.SetActive(false);
         gamePanel.SetActive(true);
+        Time.timeScale = 1f;
+        Cursor.visible = false;
+    }
+
+    public void CloseTutorialPanel()
+    {
+        tutorialPanel.SetActive(false);
         Time.timeScale = 1f;
         Cursor.visible = false;
     }
