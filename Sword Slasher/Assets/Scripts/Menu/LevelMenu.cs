@@ -13,6 +13,8 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private GameObject statPanel;
     [SerializeField] private GameObject customizationPanel;
     [SerializeField] private GameObject tutorialPanel;
+    [SerializeField] private GameObject QuestPanel;
+    [SerializeField] private GameObject LeaderBoardPanel;
 
     [Header("Audio")]
     [SerializeField] private Slider sfxSlider;
@@ -117,6 +119,8 @@ public class LevelMenu : MonoBehaviour
     {
         gamePanel.SetActive(false);
         upgradePanel.SetActive(true);
+        LeaderBoardPanel.SetActive(false);
+        QuestPanel.SetActive(false);
         optionPanel.SetActive(false);
         statPanel.SetActive(false);
         customizationPanel.SetActive(false);
@@ -134,6 +138,8 @@ public class LevelMenu : MonoBehaviour
     public void OpenOptionPanel()
     {
         gamePanel.SetActive(false);
+        LeaderBoardPanel.SetActive(false);
+        QuestPanel.SetActive(false);
         optionPanel.SetActive(true);
         upgradePanel.SetActive(false);
         statPanel.SetActive(false);
@@ -151,6 +157,8 @@ public class LevelMenu : MonoBehaviour
     public void ResumeGame()
     {
         gamePanel.SetActive(true);
+        LeaderBoardPanel.SetActive(false);
+        QuestPanel.SetActive(false);
         upgradePanel.SetActive(false);
         optionPanel.SetActive(false);
         statPanel.SetActive(false);
@@ -171,6 +179,8 @@ public class LevelMenu : MonoBehaviour
     public void OpenStatPanel()
     {
         gamePanel.SetActive(false);
+        LeaderBoardPanel.SetActive(false);
+        QuestPanel.SetActive(false);
         statPanel.SetActive(true);
         upgradePanel.SetActive(false);
         optionPanel.SetActive(false);
@@ -190,6 +200,8 @@ public class LevelMenu : MonoBehaviour
     public void OpenCustomizationPanel()
     {
         gamePanel.SetActive(false);
+        LeaderBoardPanel.SetActive(false);
+        QuestPanel.SetActive(false);
         customizationPanel.SetActive(true);
         optionPanel.SetActive(false);
         statPanel.SetActive(false);
@@ -211,6 +223,7 @@ public class LevelMenu : MonoBehaviour
         Time.timeScale = 0f;
         Cursor.visible = true;
     }
+   
 
     public void CloseTutorialPanel()
     {
@@ -218,7 +231,46 @@ public class LevelMenu : MonoBehaviour
         Time.timeScale = 1f;
         Cursor.visible = false;
     }
+    public void OpenQuestPanel()
+    {
+        gamePanel.SetActive(false);
+        QuestPanel.SetActive(true);
+        upgradePanel.SetActive(false);
+        customizationPanel.SetActive(false);
+        LeaderBoardPanel.SetActive(false);
+        optionPanel.SetActive(false);
+        statPanel.SetActive(false);
+        Time.timeScale = 0f;
+        Cursor.visible = true;
+    }
 
+    public void CloseQuestPanel()
+    {
+        QuestPanel.SetActive(false);
+        gamePanel.SetActive(true);
+        Time.timeScale = 1f;
+        Cursor.visible = false;
+    }
+    public void OpenLeaderBoardPanel()
+    {
+        gamePanel.SetActive(false);
+        QuestPanel.SetActive(false);
+        upgradePanel.SetActive(false);
+        customizationPanel.SetActive(false);
+        LeaderBoardPanel.SetActive(true);
+        optionPanel.SetActive(false);
+        statPanel.SetActive(false);
+        Time.timeScale = 0f;
+        Cursor.visible = true;
+    }
+
+    public void CloseLeaderBoardPanel()
+    {
+        LeaderBoardPanel.SetActive(false);
+        gamePanel.SetActive(true);
+        Time.timeScale = 1f;
+        Cursor.visible = false;
+    }
     public void SaveGame()
     {
         var data = SaveSystem.playerData;
