@@ -1,17 +1,33 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
-using UnityEngine.SocialPlatforms.Impl;
+using TMPro;
 
 public class LeaderboardManager : MonoBehaviour
 {
     [Header("leaderboard elements")]
-    [SerializeField] private InputField username; // player will give themself a name TODO save this 
+    [SerializeField] private TMP_InputField username; // player will give themself a name TODO save this 
     [SerializeField] private Transform leaderboard; // this is for the whole leaderboard itself like the empty gameobject with all the textfields as childs
     [SerializeField] private GameObject textFieldPrefab; // this is the textfield childs from leaderboards
     private List<leaderboardUser> users = new List<leaderboardUser>();
-    private List<Text> userRows = new List<Text>();
+    private List<TMP_Text> userRows = new List<TMP_Text>();
     private leaderboardUser playerData;
+    private void OnEnable()
+    {
+        GameEvents.OnClick += allowClicks;
+    }
+    private void OnDisable()
+    {
+        GameEvents.OnClick -= allowClicks;
+    }
+    private void allowClicks(int clickTrack)
+    {
+        if (playerData == null) 
+        {
+            return;
+        }
+        playerData.clicks = clickTrack;
+        ReloadLeaderboard();
+    }
     private void Start()
     {
         AddPlayer("king Arthor", 999, false);
@@ -31,7 +47,7 @@ public class LeaderboardManager : MonoBehaviour
             playerData = user;
         }
         GameObject spawned = Instantiate(textFieldPrefab, leaderboard);
-        userRows.Add(spawned.GetComponentInChildren<Text>());
+        userRows.Add(spawned.GetComponentInChildren<TMP_Text>());
     }
     public void UpdateClicks()
     {
@@ -64,4 +80,5 @@ public class LeaderboardManager : MonoBehaviour
             ReloadLeaderboard();
         }
     }
+   
 }
