@@ -40,8 +40,7 @@ public class MainMenu : MonoBehaviour
     {
         if (!SaveSystem.hasPlayerDataSaved())
         {
-            Debug.Log("no save file found :(");
-            return;
+            Debug.Log("no save file found");
         }
         SaveSystem.isContinuing = true;
         SceneManager.LoadScene("TrainingGrounds");
