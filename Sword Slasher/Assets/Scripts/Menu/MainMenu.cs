@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject creditsPanel;
     [Header("LevelText")]
     [SerializeField] private TMPro.TMP_Text levelText;
+    [SerializeField] private Toggle tutorialToggle;
 
     // Audio
     [SerializeField] private Slider sfxSlider;
@@ -30,6 +31,7 @@ public class MainMenu : MonoBehaviour
         audioMixer.GetFloat("BGMvolume", out bgmValue);
         bgmSlider.value = bgmValue;
         MusicManager.Play("MenuMusic");
+        tutorialToggle.isOn = PlayerPrefs.GetInt("ShowTutorial") == 1;
     }
 
     public void LevelTextRefresh()
@@ -99,5 +101,11 @@ public class MainMenu : MonoBehaviour
         {
             audioMixer.SetFloat("BGMvolume", volume);
         }
+    }
+
+    public void ToggleTutorial(bool isOn)
+    {
+        PlayerPrefs.SetInt("ShowTutorial", isOn ? 1 : 0);
+        PlayerPrefs.Save();
     }
 }

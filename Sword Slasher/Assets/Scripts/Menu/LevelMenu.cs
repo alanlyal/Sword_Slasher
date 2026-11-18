@@ -12,6 +12,7 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private GameObject optionPanel;
     [SerializeField] private GameObject statPanel;
     [SerializeField] private GameObject customizationPanel;
+    [SerializeField] private GameObject tutorialPanel;
 
     [Header("Audio")]
     [SerializeField] private Slider sfxSlider;
@@ -61,6 +62,7 @@ public class LevelMenu : MonoBehaviour
         if (SaveSystem.isContinuing)
         {
             LoadGame(SaveSystem.playerData);
+            tutorialPanel.SetActive(false);
         }
         else
         {
@@ -81,6 +83,16 @@ public class LevelMenu : MonoBehaviour
         sfxSlider.value = sfxValue;
         bgmSlider.value = bgmValue;
         MusicManager.Play("GameplayMusic");
+
+        //Never Show Tutorial on Continue
+        if (!SaveSystem.isContinuing && PlayerPrefs.GetInt("ShowTutorial") == 1)
+        {
+            OpenTutorialPanel();
+        }
+        else
+        {
+            tutorialPanel.SetActive(false);
+        }
     }
 
     //For Upgrades that generate passive clicks
@@ -193,7 +205,19 @@ public class LevelMenu : MonoBehaviour
         Cursor.visible = false;
     }
 
+    public void OpenTutorialPanel()
+    {
+        tutorialPanel.SetActive(true);
+        Time.timeScale = 0f;
+        Cursor.visible = true;
+    }
 
+    public void CloseTutorialPanel()
+    {
+        tutorialPanel.SetActive(false);
+        Time.timeScale = 1f;
+        Cursor.visible = false;
+    }
 
     public void SaveGame()
     {
