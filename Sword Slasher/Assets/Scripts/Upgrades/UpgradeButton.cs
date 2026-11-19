@@ -31,7 +31,7 @@ public class UpgradeButton : MonoBehaviour
             LevelMenu.Instance.skillPoints -= currentPrice;
             LevelMenu.Instance.upgradesOwned++;
             amountOwned++;
-            GameEvents.UpgradePurchased(LevelMenu.Instance.upgradesOwned);
+            GameEvents.TriggerEvent(EventType.TotalUpgrades, LevelMenu.Instance.upgradesOwned);
 
             //Apply Upgrade
             LevelMenu.Instance.xpPerClick += data.clickIncrease;
@@ -53,7 +53,7 @@ public class UpgradeButton : MonoBehaviour
     }
 
     //Restore Upgrades from Save Data
-    public void RestoreUpgrades(int owned )
+    public void RestoreUpgrades(int owned)
     {
         amountOwned = owned;
         currentPrice = data.basePrice + data.priceIncrease * owned;

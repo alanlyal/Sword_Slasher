@@ -13,15 +13,22 @@ public class LeaderboardManager : MonoBehaviour
     private leaderboardUser playerData;
     private void OnEnable()
     {
-        GameEvents.OnClick += allowClicks;
+        GameEvents.OnEvent += HandleEvent;
     }
     private void OnDisable()
     {
-        GameEvents.OnClick -= allowClicks;
+        GameEvents.OnEvent -= HandleEvent;
     }
+
+    private void HandleEvent(EventType type, int value)
+    {
+        if (type == EventType.TotalClicks)
+            allowClicks(value);
+    }
+
     private void allowClicks(int clickTrack)
     {
-        if (playerData == null) 
+        if (playerData == null)
         {
             return;
         }
@@ -80,5 +87,5 @@ public class LeaderboardManager : MonoBehaviour
             ReloadLeaderboard();
         }
     }
-   
+
 }

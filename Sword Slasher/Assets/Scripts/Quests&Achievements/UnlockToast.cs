@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class AchievementToast : MonoBehaviour
+public class UnlockToast : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
     [SerializeField] private TMP_Text nameText;
@@ -11,26 +11,26 @@ public class AchievementToast : MonoBehaviour
     [SerializeField] private float displayTime = 3f;
     [SerializeField] private float gapTime = 0.5f;
 
-    private readonly Queue<AchievementSO> queue = new();
+    private readonly Queue<(string title, string description)> queue = new();
     private bool isShowing;
 
-    public void Show(AchievementSO achievement)
+    public void Show(string title, string description)
     {
-        queue.Enqueue(achievement);
+        queue.Enqueue((title, description));
 
         if (!isShowing)
             StartCoroutine(ProcessQueue());
     }
 
-    IEnumerator ProcessQueue()
+    private IEnumerator ProcessQueue()
     {
         isShowing = true;
 
         while (queue.Count > 0)
         {
-            var a = queue.Dequeue();
-            nameText.text = a.achievementName;
-            descText.text = a.description;
+            var (title, description) = queue.Dequeue();
+            nameText.text = title;
+            descText.text = description;
 
             panel.SetActive(true);
             yield return new WaitForSecondsRealtime(displayTime);

@@ -14,5 +14,6 @@ public class PlayerData
     public int upgradesBought;
     public int previousLevelUpXp;
     public List<string> achievements = new();
+    public QuestSaveData quests = new();
     public List<string> upgrades = new();
 }

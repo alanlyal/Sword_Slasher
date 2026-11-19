@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using Unity.Properties;
 using UnityEngine;
@@ -104,7 +105,7 @@ public class LevelMenu : MonoBehaviour
 
         if (timer >= interval)
         {
-            if (passiveClick >0)
+            if (passiveClick > 0)
             {
                 totalPassiveClicks += passiveClick;
                 passiveXP = totalPassiveClicks * 10;
@@ -223,7 +224,7 @@ public class LevelMenu : MonoBehaviour
         Time.timeScale = 0f;
         Cursor.visible = true;
     }
-   
+
 
     public void CloseTutorialPanel()
     {
@@ -284,13 +285,17 @@ public class LevelMenu : MonoBehaviour
         data.totalClicks = totalClicks;
         data.upgradesBought = upgradesOwned;
         data.upgrades.Clear();
-        foreach(var button in FindObjectsByType<UpgradeButton>(FindObjectsInactive.Include))
+        foreach (var button in FindObjectsByType<UpgradeButton>(FindObjectsInactive.Include))
         {
             data.upgrades.Add(button.upgradeId + ":" + button.upgradesOwned);
         }
         if (AchievementManager.Instance != null)
         {
             data.achievements = AchievementManager.Instance.GetUnlocked();
+        }
+        if (QuestManager.Instance != null)
+        {
+            data.quests = QuestManager.Instance.GetSaveData();
         }
         var customization = FindAnyObjectByType<Customization>(FindObjectsInactive.Include);
         if (customization != null)
@@ -304,7 +309,7 @@ public class LevelMenu : MonoBehaviour
     public void AddClick(int i)
     {
         totalClicks += i;
-        GameEvents.Click(totalClicks);
+        GameEvents.TriggerEvent(EventType.TotalClicks, totalClicks);
         AddXp(xpPerClick);
         Debug.Log($"You have clicked {totalClicks} times"); //turn this into a UI element later
     }
@@ -320,11 +325,11 @@ public class LevelMenu : MonoBehaviour
 
     public void LevelUp()
     {
-        if (xp >= levelXp && level <20 ) // Will have to change depending on how many upgrades
+        if (xp >= levelXp && level < 20) // Will have to change depending on how many upgrades
         {
             level++;
             skillPoints++;
-            GameEvents.LevelUp(level);
+            GameEvents.TriggerEvent(EventType.TotalLevel, level);
             previousLevelUpXp = levelXp; //resets the bar once the player levels up so it doesn't reset to 0
             UpdateLvTxt();// to update the level text
             Debug.Log($"Skill Points: {skillPoints}"); //Quick Skillpoint Log
@@ -378,7 +383,7 @@ public class LevelMenu : MonoBehaviour
         upgradesOwned = data.upgradesBought;
         foreach (var button in FindObjectsByType<UpgradeButton>(FindObjectsInactive.Include))
         {
-           foreach (string savedUpgrade in data.upgrades)
+            foreach (string savedUpgrade in data.upgrades)
             {
                 string[] nameAndAmount = savedUpgrade.Split(':');
                 if (nameAndAmount[0] == button.upgradeId)
@@ -391,13 +396,21 @@ public class LevelMenu : MonoBehaviour
         {
             AchievementManager.Instance.RestoreUnlocked(data.achievements);
         }
+        if (QuestManager.Instance != null)
+        {
+            QuestManager.Instance.Initialize(data.quests, new Dictionary<EventType, int> {
+                { EventType.TotalLevel, data.level },
+                { EventType.TotalClicks, data.totalClicks },
+                { EventType.TotalUpgrades, data.upgradesBought }
+            });
+        }
         var customization = FindAnyObjectByType<Customization>(FindObjectsInactive.Include);
-        if(customization != null)
+        if (customization != null)
         {
             customization.LoadSelectedOption();
         }
     }
-    
+
 
     public void SfxVolume(float volume)
     {

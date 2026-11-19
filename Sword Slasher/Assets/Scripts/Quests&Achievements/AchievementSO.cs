@@ -3,15 +3,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AchievementSO", menuName = "Sword Slasher/Achievement")]
 public class AchievementSO : ScriptableObject
 {
+    public string id;
     public string achievementName;
     [TextArea] public string description;
-    public AchievementType type;
+    public EventType type;
     public int targetValue;
-}
 
-public enum AchievementType
-{
-    TotalLevel,
-    TotalClicks,
-    UpgradesPurchased
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (string.IsNullOrEmpty(id)) id = name;
+    }
+#endif
 }
