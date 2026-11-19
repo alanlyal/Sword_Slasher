@@ -9530,7 +9530,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -125, y: -132}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1209451350
 MonoBehaviour:
@@ -9575,7 +9575,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1209451351}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1587814842}
+        m_TargetAssemblyTypeName: Customization, Assembly-CSharp
+        m_MethodName: EnableWoodSword
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1209451351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9596,8 +9608,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: c0fff0c28f4455041a2d6c0265646647, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -11736,6 +11748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Customization
   option1: {fileID: 1326339365}
   option2: {fileID: 1544400983}
+  swordAnimator: {fileID: 1669409152}
 --- !u!1 &1601486796
 GameObject:
   m_ObjectHideFlags: 0
@@ -13406,7 +13419,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 125, y: -132}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1759019014
 MonoBehaviour:
@@ -13451,7 +13464,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1759019015}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1587814842}
+        m_TargetAssemblyTypeName: Customization, Assembly-CSharp
+        m_MethodName: EnableMetalSword
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1759019015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13472,8 +13497,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: b7b2ab9eb2f7705489b356221dfa12d9, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

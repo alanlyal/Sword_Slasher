@@ -5,7 +5,10 @@ public class Customization : MonoBehaviour
     [Header("Customizable Sprites")]
     [SerializeField] private GameObject option1;
     [SerializeField] private GameObject option2;
-
+    
+    [Header("Sword Options")]
+    [SerializeField] private Animator swordAnimator;
+    
     //for saving 
     private int selectedOption;
     public int OptionSelected => selectedOption;
@@ -44,6 +47,19 @@ public class Customization : MonoBehaviour
 
         option2.SetActive(true);
     }
+
+    public void EnableWoodSword()
+    {
+        swordAnimator.SetBool("MetalSword", false);
+        swordAnimator.Play("Idle");
+    }
+
+    public void EnableMetalSword()
+    {
+        swordAnimator.SetBool("MetalSword", true);
+        swordAnimator.Play("MetalSwordIdle");
+    }
+    
     public void LoadSelectedOption()
     { 
         int savedOption = SaveSystem.playerData.custimization;
