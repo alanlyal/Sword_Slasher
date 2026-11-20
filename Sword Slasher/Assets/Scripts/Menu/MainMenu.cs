@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private GameObject creditsPanel;
+    [SerializeField] private GameObject updatePanel;
     [Header("LevelText")]
     [SerializeField] private TMPro.TMP_Text levelText;
     [SerializeField] private Toggle tutorialToggle;
@@ -77,6 +78,14 @@ public class MainMenu : MonoBehaviour
     {
         creditsPanel.SetActive(false);
         mainMenuPanel.SetActive(true);
+    }
+    public void OpenUpdate()
+    {
+        updatePanel.SetActive(true);
+    }
+    public void CloseUpdate()
+    {
+        updatePanel.SetActive(false);
     }
 
     public void SfxVolume(float volume)
