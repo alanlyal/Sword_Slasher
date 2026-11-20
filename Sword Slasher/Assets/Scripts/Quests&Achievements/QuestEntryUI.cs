@@ -13,6 +13,7 @@ public class QuestEntryUI : MonoBehaviour
     [SerializeField] private TMP_Text rewardText;
     [SerializeField] private TMP_Text timerText; // optional
     [SerializeField] private Button claimButton;
+    [SerializeField] private TMP_Text claimButtonText;
     [SerializeField] private CanvasGroup group; // optional 
 
     private readonly List<QuestObjectiveRowUI> rows = new();
@@ -46,6 +47,12 @@ public class QuestEntryUI : MonoBehaviour
 
         claimButton.interactable = State.completed && !State.claimed;
         if (group != null) group.alpha = State.claimed ? 0.5f : 1f;
+
+        if (State.claimed) claimButtonText.text = "Claimed";
+        else
+        {
+            claimButtonText.text = "Claim";
+        }
 
         RefreshTimer();
     }

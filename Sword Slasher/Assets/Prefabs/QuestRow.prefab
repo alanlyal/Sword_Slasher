@@ -60,6 +60,7 @@ MonoBehaviour:
   rewardText: {fileID: 1908339984919883306}
   timerText: {fileID: 0}
   claimButton: {fileID: 1044323027746361785}
+  claimButtonText: {fileID: 6493285958747162091}
   group: {fileID: 0}
 --- !u!114 &1881118268394076538
 MonoBehaviour:
