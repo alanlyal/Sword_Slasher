@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class Customization : MonoBehaviour
@@ -50,12 +51,14 @@ public class Customization : MonoBehaviour
 
     public void EnableWoodSword()
     {
+        SaveSystem.playerData.swordType = 0;
         swordAnimator.SetBool("MetalSword", false);
         swordAnimator.Play("Idle");
     }
 
     public void EnableMetalSword()
     {
+        SaveSystem.playerData.swordType = 1;
         swordAnimator.SetBool("MetalSword", true);
         swordAnimator.Play("MetalSwordIdle");
     }
@@ -74,6 +77,15 @@ public class Customization : MonoBehaviour
         else
         {
             EnableNone();
+        }
+        int swordTypeSelected = SaveSystem.playerData.swordType;
+        if (swordTypeSelected == 1)
+        {
+            EnableMetalSword();
+        }
+        else
+        {
+            EnableWoodSword();
         }
     }
 }

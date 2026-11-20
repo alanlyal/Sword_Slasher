@@ -17,4 +17,5 @@ public class PlayerData
     public QuestSaveData quests = new();
     public List<string> upgrades = new();
     public string username = "Player";
+    public int swordType = 0;
 }
