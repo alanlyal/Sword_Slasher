@@ -18,6 +18,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private Slider bgmSlider;
     public AudioMixer audioMixer;
+    
+    // Update Info
+    [SerializeField] private TMPro.TMP_Text updateTitle;
+    [SerializeField] private TMPro.TMP_Text updateInfo;
 
     float sfxValue;
     float bgmValue;
@@ -33,6 +37,14 @@ public class MainMenu : MonoBehaviour
         bgmSlider.value = bgmValue;
         MusicManager.Play("MenuMusic");
         tutorialToggle.isOn = PlayerPrefs.GetInt("ShowTutorial") == 1;
+        
+        //hardcoded update for now as we are unlikely to update a live version of this game
+        SetUpdateText("Release 2: Iteration 2",
+            $"- Added toggle for the tutorial \n" + 
+            $"- Added Sword Customization \n" + 
+            $"- Added Leaderboard \n" +
+            $"- Added update log \n" +
+            $"- Added quests");
     }
 
     public void LevelTextRefresh()
@@ -116,5 +128,11 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.SetInt("ShowTutorial", isOn ? 1 : 0);
         PlayerPrefs.Save();
+    }
+
+    public void SetUpdateText(string title, string info)
+    {
+        updateTitle.text = title;
+        updateInfo.text = info;
     }
 }
