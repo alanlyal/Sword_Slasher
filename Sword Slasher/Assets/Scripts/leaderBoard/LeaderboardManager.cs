@@ -5,7 +5,7 @@ using TMPro;
 public class LeaderboardManager : MonoBehaviour
 {
     [Header("leaderboard elements")]
-    [SerializeField] private TMP_InputField username; // player will give themself a name TODO save this 
+    [SerializeField] private TMP_InputField username; 
     [SerializeField] private Transform leaderboard; // this is for the whole leaderboard itself like the empty gameobject with all the textfields as childs
     [SerializeField] private GameObject textFieldPrefab; // this is the textfield childs from leaderboards
     private List<leaderboardUser> users = new List<leaderboardUser>();
@@ -35,15 +35,22 @@ public class LeaderboardManager : MonoBehaviour
         playerData.clicks = clickTrack;
         ReloadLeaderboard();
     }
+
     private void Start()
     {
         AddPlayer("king Arthor", 999, false);
         AddPlayer("Sir Lancelot", 300, false);
         AddPlayer("Sir William Marshal", 200, false);
         AddPlayer("josh", 10, false);
-        AddPlayer("Player", 0, true);
-        username.text = "Player";
+        string playerName = "Player";
+        if (SaveSystem.isContinuing && !string.IsNullOrEmpty(SaveSystem.playerData.username))
+        {
+            playerName = SaveSystem.playerData.username;
+        }
+        AddPlayer(playerName, 0, true);
+        username.text = playerName;
         UpdateClicks();
+        
     }
     public void AddPlayer(string name, int score, bool isPlayer)
     {
@@ -84,6 +91,7 @@ public class LeaderboardManager : MonoBehaviour
         if (username.text.Length > 0)
         {
             playerData.playerName = username.text;
+            SaveSystem.playerData.username = username.text;
             ReloadLeaderboard();
         }
     }

@@ -16,4 +16,5 @@ public class PlayerData
     public List<string> achievements = new();
     public QuestSaveData quests = new();
     public List<string> upgrades = new();
+    public string username = "Player";
 }
