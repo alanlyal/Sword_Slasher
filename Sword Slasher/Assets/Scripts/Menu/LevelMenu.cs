@@ -16,6 +16,7 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private GameObject tutorialPanel;
     [SerializeField] private GameObject QuestPanel;
     [SerializeField] private GameObject LeaderBoardPanel;
+    [SerializeField] private GameObject ExtraPanel;
 
     [Header("Audio")]
     [SerializeField] private Slider sfxSlider;
@@ -274,6 +275,26 @@ public class LevelMenu : MonoBehaviour
         LeaderBoardPanel.SetActive(false);
         statPanel.SetActive(false);
         QuestPanel.SetActive(false);
+        gamePanel.SetActive(true);
+        Time.timeScale = 1f;
+        Cursor.visible = false;
+    }
+
+    public void OpenExtraPanel()
+    {
+        ExtraPanel.SetActive(true);
+        QuestPanel.SetActive(true);
+        gamePanel.SetActive(false);
+        Time.timeScale = 0f;
+        Cursor.visible = true;
+    }
+
+    public void CloseExtraPanel()
+    {
+        ExtraPanel.SetActive(false);
+        QuestPanel.SetActive(false);
+        LeaderBoardPanel.SetActive(false);
+        statPanel.SetActive(false);
         gamePanel.SetActive(true);
         Time.timeScale = 1f;
         Cursor.visible = false;

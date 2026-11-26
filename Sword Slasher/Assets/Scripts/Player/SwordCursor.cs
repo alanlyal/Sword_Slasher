@@ -11,6 +11,7 @@ public class SwordCursor : MonoBehaviour
     [SerializeField] private GameObject customizationPanel;
     [SerializeField] private GameObject questPanel;
     [SerializeField] private GameObject leaderboardPanel;
+    [SerializeField] private GameObject extraPanel;
     public float size = 2f;
 
     void Start()
@@ -23,7 +24,7 @@ public class SwordCursor : MonoBehaviour
     void Update()
     {
         //Check if a panel is open to display the cursor
-        if (tutorialPanel.activeSelf || optionsPanel.activeSelf || statsPanel.activeSelf || upgradePanel.activeSelf || customizationPanel.activeSelf || questPanel.activeSelf || leaderboardPanel.activeSelf)
+        if (tutorialPanel.activeSelf || optionsPanel.activeSelf || statsPanel.activeSelf || upgradePanel.activeSelf || customizationPanel.activeSelf || questPanel.activeSelf || leaderboardPanel.activeSelf || extraPanel.activeSelf)
         {
             Cursor.visible = true;
             return;
