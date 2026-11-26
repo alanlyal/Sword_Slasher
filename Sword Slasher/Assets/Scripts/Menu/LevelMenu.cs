@@ -180,12 +180,12 @@ public class LevelMenu : MonoBehaviour
     public void OpenStatPanel()
     {
         gamePanel.SetActive(false);
-        LeaderBoardPanel.SetActive(false);
-        QuestPanel.SetActive(false);
         statPanel.SetActive(true);
         upgradePanel.SetActive(false);
         optionPanel.SetActive(false);
         customizationPanel.SetActive(false);
+        QuestPanel.SetActive(false);
+        LeaderBoardPanel.SetActive(false);
         Time.timeScale = 0f;
         Cursor.visible = true;
     }
@@ -193,6 +193,8 @@ public class LevelMenu : MonoBehaviour
     {
         statPanel.SetActive(false);
         gamePanel.SetActive(true);
+        QuestPanel.SetActive(false);
+        LeaderBoardPanel.SetActive(false);
         Time.timeScale = 1f;
         Cursor.visible = false;
     }
@@ -248,6 +250,8 @@ public class LevelMenu : MonoBehaviour
     public void CloseQuestPanel()
     {
         QuestPanel.SetActive(false);
+        statPanel.SetActive(false);
+        LeaderBoardPanel.SetActive(false);
         gamePanel.SetActive(true);
         Time.timeScale = 1f;
         Cursor.visible = false;
@@ -268,10 +272,13 @@ public class LevelMenu : MonoBehaviour
     public void CloseLeaderBoardPanel()
     {
         LeaderBoardPanel.SetActive(false);
+        statPanel.SetActive(false);
+        QuestPanel.SetActive(false);
         gamePanel.SetActive(true);
         Time.timeScale = 1f;
         Cursor.visible = false;
     }
+
     public void SaveGame()
     {
         var data = SaveSystem.playerData;
